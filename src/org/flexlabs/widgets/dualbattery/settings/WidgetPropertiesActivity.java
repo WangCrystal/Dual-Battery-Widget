@@ -61,6 +61,7 @@ public class WidgetPropertiesActivity extends PreferenceActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        FlurryAgent.setUseHttps(true);
         FlurryAgent.onStartSession(this, Keys.Flurry);
     }
 
