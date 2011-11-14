@@ -71,6 +71,10 @@ public class Constants {
     public static final String FLURRY_EVENT_WIDGET_INFO = "tab.WidgetInfo";
     public static final String FLURRY_EVENT_WIDGET_SETTINGS = "tab.WidgetSettings";
     public static final String FLURRY_EVENT_WIDGET_OTHER = "tab.WidgetOther";
+    private static final String GOOGLE_PAGE_WIDGET_ = "/widget/";
+    public static final String GOOGLE_PAGE_WIDGET_INFO = GOOGLE_PAGE_WIDGET_ + FLURRY_EVENT_WIDGET_INFO;
+    public static final String GOOGLE_PAGE_WIDGET_SETTINGS = GOOGLE_PAGE_WIDGET_ + FLURRY_EVENT_WIDGET_SETTINGS;
+    public static final String GOOGLE_PAGE_WIDGET_OTHER = GOOGLE_PAGE_WIDGET_ + FLURRY_EVENT_WIDGET_OTHER;
 
     public static String getVersion(Context context) {
         String result;

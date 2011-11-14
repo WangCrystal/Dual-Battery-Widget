@@ -22,7 +22,9 @@ public class WidgetOtherFragment extends PreferenceFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         FlurryAgent.onEvent(Constants.FLURRY_EVENT_WIDGET_OTHER);
-        ((WidgetPropertiesActivity)getActivity()).localyticsSession.tagEvent(Constants.FLURRY_EVENT_WIDGET_OTHER);
+        WidgetPropertiesActivity activity = (WidgetPropertiesActivity)getActivity();
+        activity.localyticsSession.tagEvent(Constants.FLURRY_EVENT_WIDGET_OTHER);
+        activity.googleTracker.trackPageView(Constants.GOOGLE_PAGE_WIDGET_OTHER);
         addPreferencesFromResource(R.xml.widget_properties_other);
 
         File crashReport = new File(getActivity().getFilesDir(), Constants.STACKTRACE_FILENAME);

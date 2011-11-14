@@ -19,6 +19,7 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.widget.TextView;
 import com.flurry.android.FlurryAgent;
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.localytics.android.LocalyticsSession;
 import org.flexlabs.widgets.dualbattery.Keys;
 import org.flexlabs.widgets.dualbattery.service.BatteryMonitorService;
@@ -52,6 +53,7 @@ public class WidgetPropertiesActivity extends PreferenceActivity {
     public boolean widgetIsOld, tempUnitsC;
 
     public LocalyticsSession localyticsSession;
+    public GoogleAnalyticsTracker googleTracker;
 
     private void ensureIntentSettings() {
         Bundle extras = getIntent().getExtras();
@@ -74,6 +76,8 @@ public class WidgetPropertiesActivity extends PreferenceActivity {
         localyticsSession = new LocalyticsSession(getApplicationContext(), Keys.Localytics);
         localyticsSession.open();
         localyticsSession.upload();
+        googleTracker = GoogleAnalyticsTracker.getInstance();
+        googleTracker.startNewSession(Keys.GoogleAnalytics, this);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             getPreferenceManager().setSharedPreferencesName(Constants.SETTINGS_PREFIX + appWidgetId);
@@ -154,6 +158,12 @@ public class WidgetPropertiesActivity extends PreferenceActivity {
         WidgetUpdater.updateWidget(this, appWidgetId);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
             finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        googleTracker.stopSession();
     }
 
     @Override
