@@ -318,6 +318,7 @@ public class BatteryInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FlurryAgent.onEvent(Constants.FLURRY_EVENT_WIDGET_INFO);
+        ((WidgetPropertiesActivity)getActivity()).localyticsSession.tagEvent(Constants.FLURRY_EVENT_WIDGET_INFO);
         View view = inflater.inflate(R.layout.battery_info_table, null);
         mStatus = (TextView)view.findViewById(R.id.status);
         mLevel = (TextView)view.findViewById(R.id.level);

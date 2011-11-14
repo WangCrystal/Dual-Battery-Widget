@@ -19,6 +19,7 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.widget.TextView;
 import com.flurry.android.FlurryAgent;
+import com.localytics.android.LocalyticsSession;
 import org.flexlabs.widgets.dualbattery.Keys;
 import org.flexlabs.widgets.dualbattery.service.BatteryMonitorService;
 import org.flexlabs.widgets.dualbattery.Constants;
@@ -50,6 +51,8 @@ public class WidgetPropertiesActivity extends PreferenceActivity {
     public int appWidgetId;
     public boolean widgetIsOld, tempUnitsC;
 
+    public LocalyticsSession localyticsSession;
+
     private void ensureIntentSettings() {
         Bundle extras = getIntent().getExtras();
         widgetIsOld = extras.getBoolean(Constants.EXTRA_WIDGET_OLD, false);
@@ -68,6 +71,9 @@ public class WidgetPropertiesActivity extends PreferenceActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ensureIntentSettings();
+        localyticsSession = new LocalyticsSession(getApplicationContext(), Keys.Localytics);
+        localyticsSession.open();
+        localyticsSession.upload();
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             getPreferenceManager().setSharedPreferencesName(Constants.SETTINGS_PREFIX + appWidgetId);
@@ -93,6 +99,19 @@ public class WidgetPropertiesActivity extends PreferenceActivity {
 
         tempUnitsC = getSharedPreferences(Constants.SETTINGS_PREFIX + appWidgetId, MODE_PRIVATE)
                 .getInt(Constants.SETTING_TEMP_UNITS, Constants.SETTING_TEMP_UNITS_DEFAULT) == Constants.TEMP_UNIT_CELSIUS;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        localyticsSession.open();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        localyticsSession.close();
+        localyticsSession.upload();
     }
 
     @Override

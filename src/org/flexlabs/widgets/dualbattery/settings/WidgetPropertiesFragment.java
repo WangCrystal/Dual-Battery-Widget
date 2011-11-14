@@ -21,6 +21,7 @@ public class WidgetPropertiesFragment extends PreferenceFragment {
         super.onActivityCreated(savedInstanceState);
         FlurryAgent.onEvent(Constants.FLURRY_EVENT_WIDGET_SETTINGS);
         WidgetPropertiesActivity activity = (WidgetPropertiesActivity)getActivity();
+        activity.localyticsSession.tagEvent(Constants.FLURRY_EVENT_WIDGET_SETTINGS);
         appWidgetId = activity.appWidgetId;
 
         getPreferenceManager().setSharedPreferencesName(Constants.SETTINGS_PREFIX + appWidgetId);
