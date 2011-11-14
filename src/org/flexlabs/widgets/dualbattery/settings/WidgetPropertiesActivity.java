@@ -18,6 +18,8 @@ import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.widget.TextView;
+import com.flurry.android.FlurryAgent;
+import org.flexlabs.widgets.dualbattery.Keys;
 import org.flexlabs.widgets.dualbattery.service.BatteryMonitorService;
 import org.flexlabs.widgets.dualbattery.Constants;
 import org.flexlabs.widgets.dualbattery.R;
@@ -54,6 +56,12 @@ public class WidgetPropertiesActivity extends PreferenceActivity {
         appWidgetId = extras.getInt(
                 AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this, Keys.Flurry);
     }
 
     public void onCreate(Bundle savedInstanceState) {
@@ -122,6 +130,7 @@ public class WidgetPropertiesActivity extends PreferenceActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        FlurryAgent.onEndSession(this);
         WidgetUpdater.updateWidget(this, appWidgetId);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
             finish();

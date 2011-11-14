@@ -12,6 +12,7 @@ import android.text.format.DateUtils;
 import android.view.*;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.flurry.android.FlurryAgent;
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.model.XYMultipleSeriesDataset;
@@ -316,6 +317,7 @@ public class BatteryInfoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        FlurryAgent.onEvent(Constants.FLURRY_EVENT_WIDGET_INFO);
         View view = inflater.inflate(R.layout.battery_info_table, null);
         mStatus = (TextView)view.findViewById(R.id.status);
         mLevel = (TextView)view.findViewById(R.id.level);

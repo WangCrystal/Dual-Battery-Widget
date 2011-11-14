@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import com.flurry.android.FlurryAgent;
 import org.flexlabs.widgets.dualbattery.Constants;
 import org.flexlabs.widgets.dualbattery.R;
 
@@ -20,6 +21,7 @@ public class WidgetOtherFragment extends PreferenceFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        FlurryAgent.onEvent(Constants.FLURRY_EVENT_WIDGET_OTHER);
         addPreferencesFromResource(R.xml.widget_properties_other);
 
         File crashReport = new File(getActivity().getFilesDir(), Constants.STACKTRACE_FILENAME);

@@ -67,6 +67,10 @@ public class Constants {
     public static final String SETTING_TEMP_UNITS_NEW = "tempUnitsNew";
     public static final String SETTING_TEMP_UNITS = "tempUnits";
     public static final int SETTING_TEMP_UNITS_DEFAULT = TEMP_UNIT_CELSIUS;
+    
+    public static final String FLURRY_EVENT_WIDGET_INFO = "tab.WidgetInfo";
+    public static final String FLURRY_EVENT_WIDGET_SETTINGS = "tab.WidgetSettings";
+    public static final String FLURRY_EVENT_WIDGET_OTHER = "tab.WidgetOther";
 
     public static String getVersion(Context context) {
         String result;

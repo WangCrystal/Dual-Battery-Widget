@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.IBinder;
+import com.flurry.android.FlurryAgent;
 import org.flexlabs.widgets.dualbattery.Constants;
+import org.flexlabs.widgets.dualbattery.Keys;
 
 import java.util.Date;
 
@@ -91,7 +93,7 @@ public class BatteryMonitorService extends Service {
                     mNotificationManager.hide();
                 WidgetUpdater.updateAllWidgets(context, level, null);
             }
-        }).run(); // TODO: Change this to .start();
+        }).run();
     }
 
     /**
@@ -125,6 +127,9 @@ public class BatteryMonitorService extends Service {
         //registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_DOCK_EVENT));
         processBatteryIntent(this, registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)));
         isPopulated = true;
+
+        FlurryAgent.setUseHttps(true);
+        FlurryAgent.onStartSession(this, Keys.Flurry);
     }
     
     private void processStartIntent(Intent intent) {
@@ -158,5 +163,6 @@ public class BatteryMonitorService extends Service {
         super.onDestroy();
         unregisterReceiver(batteryReceiver);
         isPopulated = false;
+        FlurryAgent.onEndSession(this);
     }
 }
