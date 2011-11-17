@@ -23,6 +23,7 @@ public class WidgetPropertiesFragment extends PreferenceFragment {
         WidgetPropertiesActivity activity = (WidgetPropertiesActivity)getActivity();
         activity.localyticsSession.tagEvent(Constants.FLURRY_EVENT_WIDGET_SETTINGS);
         activity.googleTracker.trackPageView(Constants.GOOGLE_PAGE_WIDGET_SETTINGS);
+        activity.mpMetrics.event(Constants.FLURRY_EVENT_WIDGET_SETTINGS, null);
         appWidgetId = activity.appWidgetId;
 
         getPreferenceManager().setSharedPreferencesName(Constants.SETTINGS_PREFIX + appWidgetId);

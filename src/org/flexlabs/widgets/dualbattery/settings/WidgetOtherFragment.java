@@ -25,6 +25,7 @@ public class WidgetOtherFragment extends PreferenceFragment {
         WidgetPropertiesActivity activity = (WidgetPropertiesActivity)getActivity();
         activity.localyticsSession.tagEvent(Constants.FLURRY_EVENT_WIDGET_OTHER);
         activity.googleTracker.trackPageView(Constants.GOOGLE_PAGE_WIDGET_OTHER);
+        activity.mpMetrics.event(Constants.FLURRY_EVENT_WIDGET_OTHER, null);
         addPreferencesFromResource(R.xml.widget_properties_other);
 
         File crashReport = new File(getActivity().getFilesDir(), Constants.STACKTRACE_FILENAME);

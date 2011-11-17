@@ -321,6 +321,7 @@ public class BatteryInfoFragment extends Fragment {
         WidgetPropertiesActivity activity = (WidgetPropertiesActivity)getActivity();
         activity.localyticsSession.tagEvent(Constants.FLURRY_EVENT_WIDGET_INFO);
         activity.googleTracker.trackPageView(Constants.GOOGLE_PAGE_WIDGET_INFO);
+        activity.mpMetrics.event(Constants.FLURRY_EVENT_WIDGET_INFO, null);
         View view = inflater.inflate(R.layout.battery_info_table, null);
         mStatus = (TextView)view.findViewById(R.id.status);
         mLevel = (TextView)view.findViewById(R.id.level);

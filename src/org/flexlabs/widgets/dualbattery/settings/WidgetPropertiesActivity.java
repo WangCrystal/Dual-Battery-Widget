@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.flurry.android.FlurryAgent;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.localytics.android.LocalyticsSession;
+import com.mixpanel.android.mpmetrics.MPMetrics;
 import org.flexlabs.widgets.dualbattery.Keys;
 import org.flexlabs.widgets.dualbattery.service.BatteryMonitorService;
 import org.flexlabs.widgets.dualbattery.Constants;
@@ -54,6 +55,7 @@ public class WidgetPropertiesActivity extends PreferenceActivity {
 
     public LocalyticsSession localyticsSession;
     public GoogleAnalyticsTracker googleTracker;
+    public MPMetrics mpMetrics;
 
     private void ensureIntentSettings() {
         Bundle extras = getIntent().getExtras();
@@ -78,6 +80,7 @@ public class WidgetPropertiesActivity extends PreferenceActivity {
         localyticsSession.upload();
         googleTracker = GoogleAnalyticsTracker.getInstance();
         googleTracker.startNewSession(Keys.GoogleAnalytics, this);
+        mpMetrics = new MPMetrics(this, Keys.MixPanel);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             getPreferenceManager().setSharedPreferencesName(Constants.SETTINGS_PREFIX + appWidgetId);
@@ -164,6 +167,7 @@ public class WidgetPropertiesActivity extends PreferenceActivity {
     protected void onDestroy() {
         super.onDestroy();
         googleTracker.stopSession();
+        mpMetrics.flush();
     }
 
     @Override
