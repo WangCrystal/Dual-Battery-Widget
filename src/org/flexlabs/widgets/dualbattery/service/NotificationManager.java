@@ -14,7 +14,6 @@ public class NotificationManager {
     private static final int NOTIFICATION_DOCK = 1;
 
     private android.app.NotificationManager mNotificationManager;
-    private Notification mNotification;
     private Context mContext;
     private CharSequence title;
 
@@ -22,23 +21,36 @@ public class NotificationManager {
         mNotificationManager = (android.app.NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mContext = context;
         title = context.getString(R.string.app_name);
-        //Intent notificationIntent = new Intent(context, BatteryMonitorService.class);
-        //PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-
-        mNotification = new Notification(
-                R.drawable.icon,
-                null,
-                System.currentTimeMillis());
-        mNotification.setLatestEventInfo(context, title, null, null);
-        mNotification.flags =
-                Notification.FLAG_ONGOING_EVENT |
-                Notification.FLAG_ONLY_ALERT_ONCE |
-                Notification.FLAG_NO_CLEAR;
     }
     
-    public void update(int dockLevel) {
-        mNotification.setLatestEventInfo(mContext, title, "Dock battery level: " + dockLevel + "%", null);
-        mNotificationManager.notify(NOTIFICATION_DOCK, mNotification);
+    public void update(int dockLevel, boolean charging) {
+        int icon = charging
+                ? R.drawable.stat_sys_battery_charge
+                : R.drawable.stat_sys_battery;
+
+        // Notification Builder straight up refuses to create a notification without a ticker :(
+        /*Notification notification = new Notification.Builder(mContext)
+                .setSmallIcon(icon, dockLevel)
+                .setContentTitle(title)
+                .setContentText("Dock battery level: " + dockLevel + "%")
+                //.setNumber(dockLevel)
+                .setAutoCancel(false)
+                .setOngoing(true)
+                .setOnlyAlertOnce(true)
+                .setTicker(null)
+                .getNotification();*/
+        
+        Notification notification = new Notification(icon, null, System.currentTimeMillis());
+        notification.iconLevel = dockLevel;
+        notification.flags =
+            Notification.FLAG_ONGOING_EVENT |
+            Notification.FLAG_ONLY_ALERT_ONCE |
+            Notification.FLAG_NO_CLEAR;
+        notification.setLatestEventInfo(mContext, title, "Dock battery level: " + dockLevel + "%", null);
+
+        notification.tickerText = null;
+        notification.contentView.setInt(android.R.id.icon, "setImageLevel", dockLevel);
+        mNotificationManager.notify(NOTIFICATION_DOCK, notification);
     }
     
     public void hide() {

@@ -1,9 +1,7 @@
-package org.flexlabs.widgets.dualbattery.settings.types;
+package org.flexlabs.widgets.dualbattery.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.preference.DialogPreference;
@@ -20,7 +18,6 @@ import org.flexlabs.widgets.dualbattery.R;
 public class SeekBarPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
     private static final String androidNs = "http://schemas.android.com/apk/res/android";
 
-    private SeekBar mSeekBar;
     private TextView mValueText;
     private String mSummary;
     private int mDefault, mMin = 10, mMax, mValue = 0;
@@ -87,10 +84,10 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
         mValueText = (TextView)view.findViewById(R.id.value);
         mValueText.setText(String.valueOf(mValue));
 
-        mSeekBar = (SeekBar)view.findViewById(R.id.seekbar);
-        mSeekBar.setMax(mMax - mMin);
-        mSeekBar.setProgress(mValue - mMin);
-        mSeekBar.setOnSeekBarChangeListener(this);
+        SeekBar seekBar = (SeekBar) view.findViewById(R.id.seekbar);
+        seekBar.setMax(mMax - mMin);
+        seekBar.setProgress(mValue - mMin);
+        seekBar.setOnSeekBarChangeListener(this);
     }
 
     public void onStartTrackingTouch(SeekBar seek) {}

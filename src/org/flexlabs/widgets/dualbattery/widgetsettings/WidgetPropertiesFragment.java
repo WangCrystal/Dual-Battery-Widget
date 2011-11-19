@@ -1,9 +1,9 @@
-package org.flexlabs.widgets.dualbattery.settings;
+package org.flexlabs.widgets.dualbattery.widgetsettings;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import com.flurry.android.FlurryAgent;
-import org.flexlabs.widgets.dualbattery.service.BatteryMonitorService;
+import org.flexlabs.widgets.dualbattery.BatteryLevel;
 import org.flexlabs.widgets.dualbattery.Constants;
 import org.flexlabs.widgets.dualbattery.R;
 
@@ -28,7 +28,7 @@ public class WidgetPropertiesFragment extends PreferenceFragment {
 
         getPreferenceManager().setSharedPreferencesName(Constants.SETTINGS_PREFIX + appWidgetId);
         addPreferencesFromResource(R.xml.widget_properties_general);
-        if (BatteryMonitorService.isDockSupported(getActivity())) {
+        if (BatteryLevel.getCurrent().is_dockFriendly()) {
             addPreferencesFromResource(R.xml.widget_properties_dock);
         }
     }

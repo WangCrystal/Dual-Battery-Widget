@@ -10,6 +10,9 @@ import android.content.pm.PackageManager;
  * Time: 21:34
  */
 public class Constants {
+    public static final String LOG = "FlexLabs.DBW";
+
+    public static final String EXTRA_WIDGET_IDS = "widgetIds";
     public static final String EXTRA_WIDGET_OLD = "WidgetAlreadySetup";
     public static final String SETTINGS_PREFIX = "widgetPref_";
     public static final String FeedbackDestination = "FlexLabs <android@flexlabs.org>";
@@ -61,7 +64,7 @@ public class Constants {
     public static final String SETTING_SHOW_LABEL = "showBatteryLabel";
     public static final boolean SETTING_SHOW_LABEL_DEFAULT = false;
     public static final String SETTING_SHOW_OLD_DOCK = "showOldDockStatus";
-    public static final boolean SETTING_SHOW_OLD_DOCK_DEFAULT = false;
+    public static final boolean SETTING_SHOW_OLD_DOCK_DEFAULT = true;
     public static final int TEMP_UNIT_CELSIUS = 0;
     public static final int TEMP_UNIT_FAHRENHEIT = 1;
     public static final String SETTING_TEMP_UNITS_NEW = "tempUnitsNew";

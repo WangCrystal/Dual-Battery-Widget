@@ -1,4 +1,4 @@
-package org.flexlabs.widgets.dualbattery.settings;
+package org.flexlabs.widgets.dualbattery.widgetsettings;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -23,10 +23,10 @@ import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.localytics.android.LocalyticsSession;
 import com.mixpanel.android.mpmetrics.MPMetrics;
 import org.flexlabs.widgets.dualbattery.Keys;
-import org.flexlabs.widgets.dualbattery.service.BatteryMonitorService;
+import org.flexlabs.widgets.dualbattery.BatteryLevel;
+import org.flexlabs.widgets.dualbattery.BatteryWidgetUpdater;
 import org.flexlabs.widgets.dualbattery.Constants;
 import org.flexlabs.widgets.dualbattery.R;
-import org.flexlabs.widgets.dualbattery.service.WidgetUpdater;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -88,7 +88,7 @@ public class WidgetPropertiesActivity extends PreferenceActivity {
                 addPreferencesFromResource(R.xml.widget_properties_battery_links);
             }
             addPreferencesFromResource(R.xml.widget_properties_general);
-            if (BatteryMonitorService.isDockSupported(this)) {
+            if (BatteryLevel.getCurrent().is_dockFriendly()) {
                 addPreferencesFromResource(R.xml.widget_properties_dock);
             }
             addPreferencesFromResource(R.xml.widget_properties_other);
@@ -158,7 +158,7 @@ public class WidgetPropertiesActivity extends PreferenceActivity {
     protected void onStop() {
         super.onStop();
         FlurryAgent.onEndSession(this);
-        WidgetUpdater.updateWidget(this, appWidgetId);
+        BatteryWidgetUpdater.updateWidget(this, appWidgetId);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
             finish();
     }
@@ -219,7 +219,7 @@ public class WidgetPropertiesActivity extends PreferenceActivity {
         Bundle extras = intent.getExtras();
         String allKeys = TextUtils.join(", ", extras.keySet());
         sb.append("<br />\n<b>Battery intent keys:</b> ").append(allKeys);
-        sb.append("<br />\n<b>Is Dock supported:</b> ").append(BatteryMonitorService.isDockSupported(this));
+        sb.append("<br />\n<b>Is Dock supported:</b> ").append(BatteryLevel.getCurrent().is_dockFriendly());
         int dockStatus = extras.getInt("dock_status", -1);
         String dockStatusStr = "";
         switch (dockStatus) {
